@@ -1,0 +1,17 @@
+{
+  "name": "font-generator",
+  "version": "0.1.0",
+  "description": "convert .ttf font to eot and woff",
+  "license": "MIT",
+  "bin": "index.js",
+  "devDependencies": {
+    "shelljs": "^0.6.0"
+  },
+  "scripts": {
+  	"setup" : "npm i -g ttf2woff ttf2eot && npm i && npm link"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/suitmedia/WFG"
+  }
+}
