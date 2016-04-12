@@ -16,9 +16,9 @@ fs.readdir('./',function(err,files){
             var familyName = filename.split('-');
             console.log(`Converting ${filename}`);
 
-            shell.exec('ttf2woff '+ filename +'.ttf '+ filename +'.woff');
-            shell.exec('ttf2eot '+ filename +'.ttf '+ filename +'.eot');
-            shell.exec('cat '+ filename +'.ttf | ttf2woff2 >> '+ filename +'.woff2');
+            shell.exec(`ttf2woff ${filename}.ttf ${filename}.woff`);
+            shell.exec(`ttf2eot ${filename}.ttf ${filename}.eot`);
+            shell.exec(`cat ${filename}.ttf | ttf2woff2 >> ${filename}.woff2`);
             
             content += stylesheetContent (familyName,filename);
         }
