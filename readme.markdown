@@ -1,12 +1,12 @@
 # WebFont generator (WFG)
 
-> is a tool to convert .ttf files to .eot and .woff along with the stylesheet containing `@font-face` rules
+> is a tool to convert .ttf files to .eot, .woff and .woff2 along with the stylesheet containing `@font-face` rules
 
 ## Requirement
 
 * NodeJS v4
 
-**Note**: WFG will automatically install ttf2eot and ttf2woff modules globally via npm.
+**Note**: WFG will automatically install ttf2eot, ttf2woff and ttf2woff2 modules globally via npm.
 
 ## Installation
 
@@ -19,5 +19,5 @@
 
 1. `cd` into directory containing .ttf font files you want to convert
 2. Run command `font-generator`
-3. WFG will automagically convert .ttf files to .eot and .woff and generate a stylesheet
+3. WFG will automagically convert .ttf files to .eot, .woff and .woff2 then generate a stylesheet
 4. Done. All assets are ready to use

@@ -14,10 +14,12 @@ fs.readdir('./',function(err,files){
     	if (file.includes('.ttf')) {
             var filename = path.basename(file,'.ttf');
             var familyName = filename.split('-');
-           
+            console.log(`Converting ${filename}`);
+
             shell.exec('ttf2woff '+ filename +'.ttf '+ filename +'.woff');
             shell.exec('ttf2eot '+ filename +'.ttf '+ filename +'.eot');
-            console.log(`Converting ${filename}`);
+            shell.exec('cat '+ filename +'.ttf | ttf2woff2 >> '+ filename +'.woff2');
+            
             content += stylesheetContent (familyName,filename);
         }
     });
@@ -29,15 +31,16 @@ fs.readdir('./',function(err,files){
 });
 
 function stylesheetContent (familyName,filename) {
-    return `@font-face {
+    return `
+@font-face {
     font-family: '${familyName[0]}';
     src: url('${filename}.eot');
     src: url('${filename}.eot?#iefix') format('embedded-opentype'),
-    url('${filename}.woff') format('woff'),
-    url('${filename}.ttf') format('truetype');
+         url('${filename}.woff2') format('woff2'),
+         url('${filename}.woff') format('woff'),
+         url('${filename}.ttf') format('truetype');
+
     font-weight: normal;
     font-style: normal; 
-}
-
-`
+}`
 }
