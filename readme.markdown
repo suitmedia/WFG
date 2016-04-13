@@ -2,6 +2,10 @@
 
 > is a tool to convert .ttf files to .eot, .woff and .woff2 along with the stylesheet containing `@font-face` rules
 
+## Status
+
+This tool is still work in progress
+
 ## Requirement
 
 * NodeJS v4
