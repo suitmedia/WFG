@@ -7,8 +7,9 @@ const ttfInfo = require('ttfinfo');
 
 var content = '';
 
-fs.readdir('./',function(err,files){
+fs.readdir('./', function(err,files) {
     if (err) throw err;
+
     console.log('On process');
 
     var TTFs = files.filter( function(file) {
@@ -18,7 +19,7 @@ fs.readdir('./',function(err,files){
     var length = TTFs.length;
     var counter = 0;
     
-    TTFs.forEach(function(file){
+    TTFs.forEach( function(file) {
         var fileName = path.basename(file,'.ttf');
         var familyName = fileName.split('-');
 
@@ -35,6 +36,7 @@ fs.readdir('./',function(err,files){
             }
 
             console.log(`Converting ${fileName}`);
+
             shell.exec(`ttf2woff ${fileName}.ttf ${fileName}.woff`);
             shell.exec(`ttf2eot ${fileName}.ttf ${fileName}.eot`);
             shell.exec(`cat ${fileName}.ttf | ttf2woff2 >> ${fileName}.woff2`);
@@ -46,6 +48,7 @@ fs.readdir('./',function(err,files){
                 fs.writeFile('stylesheet.css', content , (err) => {
                     if (err) throw err;
                 });
+
                 console.log('Convert finish');
             }
         }); 
@@ -53,16 +56,6 @@ fs.readdir('./',function(err,files){
 });
 
 function stylesheetContent (familyName,fileName,fontWeight,fontStyle) {
-    var weightMap = {
-        thin : 100,
-        light : 300,
-        regular : 400,
-        medium : 500,
-        semibold : 600,
-        bold : 700,
-        extraBold : 800,
-        black : 900
-    }
 
     return `
 @font-face {
