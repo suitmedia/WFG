@@ -5,10 +5,11 @@
   "license": "MIT",
   "bin": "index.js",
   "devDependencies": {
-    "shelljs": "^0.6.0"
+    "shelljs": "^0.6.0",
+    "ttfinfo": "^0.2.0"
   },
   "scripts": {
-  	"setup" : "npm i -g ttf2woff ttf2eot ttf2woff2 && npm i && npm link"
+    "setup": "npm i -g ttf2woff ttf2eot ttf2woff2 && npm i && npm link"
   },
   "repository": {
     "type": "git",

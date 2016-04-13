@@ -3,44 +3,70 @@
 const fs = require ("fs");
 const path = require ("path");
 const shell = require ("shelljs");
+const ttfInfo = require('ttfinfo');
 
 var content = '';
 
-fs.readdir('./',function(err,files){
+fs.readdir('./', function( err,files ) {
     if (err) throw err;
-    console.log('On process');
-    
-    files.forEach(function(file){
-    	if (file.includes('.ttf')) {
-            var filename = path.basename(file,'.ttf');
-            var familyName = filename.split('-');
-            console.log(`Converting ${filename}`);
 
-            shell.exec(`ttf2woff ${filename}.ttf ${filename}.woff`);
-            shell.exec(`ttf2eot ${filename}.ttf ${filename}.eot`);
-            shell.exec(`cat ${filename}.ttf | ttf2woff2 >> ${filename}.woff2`);
-            
-            content += stylesheetContent (familyName,filename);
-        }
-    });
+    console.log('On process');
+
+    var TTFs = files.filter( function( file ) {
+        return file.includes('.ttf');
+    }); 
+
+    var length = TTFs.length;
+    var counter = 0;
     
-    fs.writeFile('stylesheet.css', content , (err) => {
-        if (err) throw err;
+    TTFs.forEach( function( file ) {
+        var fileName = path.basename(file,'.ttf');
+        var familyName = fileName.split('-');
+
+        ttfInfo(`${fileName}.ttf`, function( err, info ) {
+            if (err) throw err;
+            var fontWeight = (info.tables['OS\/2'].weightClass);
+            var fontInfo = (info.tables.post.italicAngle);
+            var fontStyle = '';
+
+            if ( fontInfo < 0 ) {
+                fontStyle = 'italic';
+            } else {
+                fontStyle = 'normal';
+            }
+
+            console.log(`Converting ${fileName}`);
+
+            shell.exec(`ttf2woff ${fileName}.ttf ${fileName}.woff`);
+            shell.exec(`ttf2eot ${fileName}.ttf ${fileName}.eot`);
+            shell.exec(`cat ${fileName}.ttf | ttf2woff2 >> ${fileName}.woff2`);
+            
+            content += stylesheetContent (familyName[0], fileName, fontWeight, fontStyle);
+            counter++;
+
+            if (counter === length) {
+                fs.writeFile('stylesheet.css', content , (err) => {
+                    if (err) throw err;
+
+                    console.log('Convert finish');
+                });   
+            }
+        }); 
     });
-    console.log('Convert finish');
 });
 
-function stylesheetContent (familyName,filename) {
+function stylesheetContent( familyName, fileName, fontWeight, fontStyle ) {
+
     return `
 @font-face {
-    font-family: '${familyName[0]}';
-    src: url('${filename}.eot');
-    src: url('${filename}.eot?#iefix') format('embedded-opentype'),
-         url('${filename}.woff2') format('woff2'),
-         url('${filename}.woff') format('woff'),
-         url('${filename}.ttf') format('truetype');
+    font-family: '${familyName}';
+    src: url('${fileName}.eot');
+    src: url('${fileName}.eot?#iefix') format('embedded-opentype'),
+         url('${fileName}.woff2') format('woff2'),
+         url('${fileName}.woff') format('woff'),
+         url('${fileName}.ttf') format('truetype');
 
-    font-weight: normal;
-    font-style: normal; 
+    font-weight: ${fontWeight};
+    font-style: ${fontStyle}; 
 }`
 }
