@@ -1,5 +1,5 @@
 {
-  "name": "font-generator",
+  "name": "wfg",
   "version": "0.1.0",
   "description": "convert .ttf font to eot and woff",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "shelljs": "^0.6.0"
   },
   "scripts": {
-  	"setup" : "npm i -g ttf2woff ttf2eot ttf2woff2 && npm i && npm link"
+  	"setup" : "npm i -g ttf2woff ttf2eot ttf2woff2 ttfinfo && npm i && npm link"
   },
   "repository": {
     "type": "git",
