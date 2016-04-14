@@ -6,27 +6,27 @@ const path = require ("path");
 const shell = require ("shelljs");
 const ttfInfo = require('ttfinfo');
 
-let content = '';
+let content = ``;
 
-fs.readdir('./',( err,files ) => {
+fs.readdir(`./`,( err,files ) => {
     if (err) throw err;
 
-    console.log('On process');
+    console.log(`On process`);
 
-    let TTFs = files.filter( ( file ) => file.includes('.ttf') ); 
+    let TTFs = files.filter( ( file ) => file.includes(`.ttf`) ); 
 
     let length = TTFs.length;
     let counter = 0;
     
     TTFs.forEach( ( file ) => {
-        let fileName = path.basename(file,'.ttf');
-        let familyName = fileName.split('-');
+        let fileName = path.basename(file,`.ttf`);
+        let familyName = fileName.split(`-`);
 
         ttfInfo(`${fileName}.ttf`,( err, info ) => {
             if (err) throw err;
-            let fontWeight = (info.tables['OS\/2'].weightClass);
+            let fontWeight = (info.tables[`OS\/2`].weightClass);
             let fontInfo = (info.tables.post.italicAngle);
-            let fontStyle = fontInfo < 0 ? 'italic' : 'normal';
+            let fontStyle = fontInfo < 0 ? `italic` : `normal`;
             
             console.log(`Converting ${fileName}`);
 
@@ -38,10 +38,10 @@ fs.readdir('./',( err,files ) => {
             counter++;
 
             if (counter === length) {
-                fs.writeFile('stylesheet.css', content , (err) => {
+                fs.writeFile(`stylesheet.css`, content , (err) => {
                     if (err) throw err;
 
-                    console.log('Convert finish');
+                    console.log(`Convert finish`);
                 });   
             }
         }); 
