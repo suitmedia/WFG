@@ -22,6 +22,6 @@ This tool is still work in progress
 ## Usage
 
 1. `cd` into directory containing .ttf font files you want to convert
-2. Run command `font-generator`
+2. Run command `wfg`
 3. WFG will automagically convert .ttf files to .eot, .woff and .woff2 then generate a stylesheet
 4. Done. All assets are ready to use
