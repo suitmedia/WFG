@@ -1,40 +1,33 @@
 #! /usr/bin/env node
+"use strict";
 
 const fs = require ("fs");
 const path = require ("path");
 const shell = require ("shelljs");
 const ttfInfo = require('ttfinfo');
 
-var content = '';
+let content = '';
 
-fs.readdir('./', function( err,files ) {
+fs.readdir('./',( err,files ) => {
     if (err) throw err;
 
     console.log('On process');
 
-    var TTFs = files.filter( function( file ) {
-        return file.includes('.ttf');
-    }); 
+    let TTFs = files.filter( ( file ) => file.includes('.ttf') ); 
 
-    var length = TTFs.length;
-    var counter = 0;
+    let length = TTFs.length;
+    let counter = 0;
     
-    TTFs.forEach( function( file ) {
-        var fileName = path.basename(file,'.ttf');
-        var familyName = fileName.split('-');
+    TTFs.forEach( ( file ) => {
+        let fileName = path.basename(file,'.ttf');
+        let familyName = fileName.split('-');
 
-        ttfInfo(`${fileName}.ttf`, function( err, info ) {
+        ttfInfo(`${fileName}.ttf`,( err, info ) => {
             if (err) throw err;
-            var fontWeight = (info.tables['OS\/2'].weightClass);
-            var fontInfo = (info.tables.post.italicAngle);
-            var fontStyle = '';
-
-            if ( fontInfo < 0 ) {
-                fontStyle = 'italic';
-            } else {
-                fontStyle = 'normal';
-            }
-
+            let fontWeight = (info.tables['OS\/2'].weightClass);
+            let fontInfo = (info.tables.post.italicAngle);
+            let fontStyle = fontInfo < 0 ? 'italic' : 'normal';
+            
             console.log(`Converting ${fileName}`);
 
             shell.exec(`ttf2woff ${fileName}.ttf ${fileName}.woff`);
