@@ -20,9 +20,8 @@ This tool is still work in progress
 
 ## Update
 
-1. `cd` into the directory
-2. Pull from this repository
-3. Run command `npm run setup` again to install new required modules
+1. Git pull to get latest update
+2. Run command `npm run setup`
 
 ## Usage
 
