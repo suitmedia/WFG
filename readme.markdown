@@ -18,6 +18,10 @@ This tool is still work in progress
 2. `cd` into the directory
 3. Run command `npm run setup` to install required modules
 
+## Update
+
+1. Git pull to get latest update
+2. Run command `npm run setup`
 
 ## Usage
 
